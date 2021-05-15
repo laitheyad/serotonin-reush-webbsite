@@ -1,0 +1,40 @@
+@media all and (min-width: 480px) {
+  .Login form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    width: 25%;
+  }
+}
+.customModal {
+  background: rgb(255, 255, 255);
+  /* max-width: 500px; */
+  width: 200%;
+  height: 28%;
+}
+.customModal button {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+}
+.logo_login {
+  width: 25%;
+
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+.react-responsive-modal-closeButton {
+  position: absolute;
+  top: 10%;
+  left: -90%;
+}
+.info-modal {
+  width: 200%;
+}
