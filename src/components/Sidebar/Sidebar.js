@@ -1,4 +1,5 @@
 import { useLocation, NavLink } from "react-router-dom";
+import logo from "../../assets/img/log.png";
 
 import { Nav } from "react-bootstrap";
 let logval = localStorage.getItem("isLoggedIn");
@@ -18,8 +19,20 @@ function Sidebar({ color, image, routes }) {
         }}
       />
       <div className="sidebar-wrapper">
+        <img
+          src={logo}
+          alt="Logo"
+          style={{
+            margin: 15,
+            height: 55,
+            width: 230,
+            backgroundColor: "rgba(255,255,255,0.6)",
+            borderRadius: 15,
+            padding: 6,
+          }}
+        />
         <div className="logo d-flex align-items-center justify-content-start">
-          <span className="simple-text">Serotonin Rush</span>
+          <div className="simple-text">Serotonin Rush</div>
         </div>
         <Nav>
           {routes.map((prop, key) => {

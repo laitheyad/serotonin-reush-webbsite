@@ -37,4 +37,15 @@
 }
 .info-modal {
   width: 200%;
+  border-radius: 25px;
+}
+.logo_register {
+  width: 25%;
+
+  position: absolute;
+  top: 20%;
+  left: 45%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
 }

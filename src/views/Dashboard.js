@@ -39,7 +39,7 @@ function Dashboard() {
   return (
     <>
       <Container fluid>
-        <Row style={{ paddingLeft: 60 }}>
+        {/* <Row style={{ paddingLeft: 60 }}>
           <div
             style={{
               backgroundImage: `url(${test} )`,
@@ -57,7 +57,7 @@ function Dashboard() {
             </button>
           </div>
         </Row>
-        <hr />
+        <hr /> */}
         <Row>
           <Col>
             <Card
@@ -136,7 +136,6 @@ function Dashboard() {
               }}
             >
               <Card.Title style={{ paddingLeft: 50 }}>
-                {" "}
                 <img
                   alt="..."
                   src={require("assets/img/cook.png").default}
@@ -145,7 +144,6 @@ function Dashboard() {
               </Card.Title>
               <Card.Body>
                 <label style={{ fontSize: 10, paddingLeft: 30 }}>
-                  {" "}
                   Best Diets Routine!
                 </label>
                 <div style={{ paddingLeft: 50, paddingTop: 10 }}>
@@ -173,7 +171,11 @@ function Dashboard() {
               style={{ height: 300, width: 150 }}
             ></img>
           </div>
-          <Grid container spacing={4} style={{ maxWidth: "70%" }}>
+          <Grid
+            container
+            spacing={4}
+            style={{ maxWidth: "70%", marginLeft: "7%" }}
+          >
             <Grid item xs={10}>
               <Grid container justify="center" spacing={0}>
                 {news.map((news_item) => (
@@ -182,7 +184,9 @@ function Dashboard() {
                     <Card.Body>
                       <Card.Title>{cut_string(news_item.title, 21)}</Card.Title>
                       <Card.Text>{cut_string(news_item.body, 35)}</Card.Text>
-                      <Button variant="primary">Go somewhere</Button>
+                      <a href={news_item.url} className="btn btn-secondary">
+                        Visit Link
+                      </a>
                     </Card.Body>
                   </Card>
                 ))}

@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from "react";
-
-// react-bootstrap components
 import { Card, Container, Row, Col } from "react-bootstrap";
 import NotificationAlert from "react-notification-alert";
-
 import Button from "react-bootstrap/Button";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import Rating from "@material-ui/lab/Rating";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
-import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
-import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@material-ui/icons/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import Grid from "@material-ui/core/Grid";
 import "../components/Login.css";
 import Loader from "react-loader-spinner";
@@ -24,8 +13,6 @@ function TableList() {
   const [open, setOpen] = useState(false);
   const [meal, setMeal] = useState({});
   const [selectedMeals, setSelectedMeals] = useState([]);
-  const [RatingModal, setRatingModal] = useState(false);
-  const [RatingValue, setRatingValue] = useState(3);
   const notificationAlertRef = React.useRef(null);
 
   const notify = (place, color, msg = "") => {
@@ -63,33 +50,7 @@ function TableList() {
     };
     notificationAlertRef.current.notificationAlert(options);
   };
-  const customIcons = {
-    1: {
-      icon: <SentimentVeryDissatisfiedIcon />,
-      label: "Very Dissatisfied",
-    },
-    2: {
-      icon: <SentimentDissatisfiedIcon />,
-      label: "Dissatisfied",
-    },
-    3: {
-      icon: <SentimentSatisfiedIcon />,
-      label: "Neutral",
-    },
-    4: {
-      icon: <SentimentSatisfiedAltIcon />,
-      label: "Satisfied",
-    },
-    5: {
-      icon: <SentimentVerySatisfiedIcon />,
-      label: "Very Satisfied",
-    },
-  };
 
-  const IconContainer = (props) => {
-    const { value, ...other } = props;
-    return <span {...other}>{customIcons[value].icon}</span>;
-  };
   const AddMeal = (id) => {
     let meal_object = meals.filter((meal) => {
       return meal.id == id;
@@ -152,7 +113,7 @@ function TableList() {
       headers: header,
       redirect: "follow",
     };
-    await fetch("https://serotoninrush.tech/approved_meals/", requestOptions)
+    await fetch("https://serotoninrush.tech/pending_meals/", requestOptions)
       .then((response) => response.text())
       .then(async (result) => {
         let response = await JSON.parse(result);
@@ -162,20 +123,12 @@ function TableList() {
   useEffect(() => {
     getMeals();
   }, []);
-  async function _Save() {
-    let selected = selectedMeals;
-    let items = [];
-    for (let i = 0; i < selected.length; i++) {
-      items.push(selected[i].id);
-    }
-
+  async function _changeMealStatus(state) {
+    onCloseModal();
     let header = new Headers();
     let form = new FormData();
-    form.append("username", "laitheyad");
-    form.append("reaction", RatingValue);
-    var arr = await JSON.stringify(items);
-    form.append("meals", arr);
-
+    form.append("pk", meal.id);
+    form.append("state", state);
     header.append("Authorization", "Token " + localStorage.getItem("token"));
     var requestOptions = {
       method: "POST",
@@ -183,17 +136,35 @@ function TableList() {
       body: form,
       redirect: "follow",
     };
-    await fetch("https://serotoninrush.tech/API/add_reaction/", requestOptions)
+    await fetch(
+      "https://serotoninrush.tech/change_meal_status/",
+      requestOptions
+    )
       .then((response) => response.text())
       .then(async (result) => {
         let response = await JSON.parse(result);
-        setRatingModal(false);
-        notify(
-          "tc",
-          2,
-          "Your reaction has been added seccessfully, and it can't be changed ! "
-        );
+        state === "Approve"
+          ? notify(
+              "tc",
+              2,
+              "This meal has been Approved seccessfully, Thank You for being helpfull"
+            )
+          : notify(
+              "tc",
+              5,
+              "This meal has been Rejected seccessfully, Thank You for being helpfull"
+            );
       });
+
+    getMeals();
+  }
+
+  function cut_string(string = "", len) {
+    console.log(string);
+    if (string.length > len) {
+      let text = string.substring(0, len);
+      return text + " ...";
+    } else return string;
   }
   return (
     <>
@@ -207,10 +178,14 @@ function TableList() {
         {
           <Grid
             container
-            spacing={4}
-            style={{ height: "70Vh", overflowY: "scroll", marginTop: 10 }}
+            style={{
+              height: "80Vh",
+              overflowY: "scroll",
+              marginTop: 20,
+              paddingLeft: 50,
+            }}
           >
-            <Grid item xs={11}>
+            <Grid item xs={12}>
               <Grid container justify="center" spacing={6}>
                 {meals.length > 0 &&
                   meals.map((meal) => (
@@ -220,7 +195,7 @@ function TableList() {
                           width: "18rem",
                           display: "flex",
                           width: "25vh",
-                          height: "30vh",
+                          height: "25vh",
                         }}
                       >
                         <Card.Img
@@ -234,46 +209,31 @@ function TableList() {
                               <Card.Title
                                 style={{ color: "black", fontSize: 14 }}
                               >
-                                {meal.name}
+                                {cut_string(meal.name, 20)}
                               </Card.Title>
-                            </Col>
-                            <Col style={{ paddingLeft: 30 }}>
-                              {" "}
-                              <Button
-                                variant="link"
-                                style={{ width: 55, height: 30 }}
-                                onClick={() => onOpenModal(meal.id)}
-                              >
-                                info
-                              </Button>
                             </Col>
                           </Row>
                           <Card.Text
                             style={{ color: "rgb(96,96,96) ", fontSize: 10 }}
                           >
-                            {meal.recipe}
+                            {cut_string(meal.recipe, 80)}
                           </Card.Text>
-                          <Row>
-                            <Col>
-                              <Button
-                                variant="success"
-                                style={{ height: 10, paddingBottom: 26 }}
-                                onClick={() => AddMeal(meal.id)}
-                              >
-                                +
-                              </Button>
-                            </Col>
-                            <Col style={{ paddingLeft: 40 }}>
-                              <Button
-                                variant="outline-danger"
-                                style={{ height: 10, paddingBottom: 26 }}
-                                onClick={() => RemoveMeal(meal.id)}
-                              >
-                                -
-                              </Button>
-                            </Col>
-                          </Row>
                         </Card.Body>
+                        <Row
+                          style={{
+                            justifyContent: "center",
+                            marginBottom: 15,
+                          }}
+                        >
+                          <Button
+                            variant="outline-primary"
+                            style={{ textAlign: "center", width: "75%" }}
+                            onClick={() => onOpenModal(meal.id)}
+                            // size="lg"
+                          >
+                            info
+                          </Button>
+                        </Row>
                       </Card>
                     </Grid>
                   ))}
@@ -315,119 +275,54 @@ function TableList() {
               :{meal.carbohydrate}
             </h4>
             <h4>
-              {" "}
-              <span style={{ color: "rgb(100, 100, 100)" }}>
-                Calories{" "}
-              </span>: {meal.calories}
+              <span style={{ color: "rgb(100, 100, 100)" }}>Calories</span>:{" "}
+              {meal.calories}
             </h4>
             <h4>
-              {" "}
-              <span style={{ color: "rgb(100, 100, 100)" }}>
-                Protein{" "}
-              </span>: {meal.protein}
+              <span style={{ color: "rgb(100, 100, 100)" }}>Protein</span>:{" "}
+              {meal.protein}
             </h4>
             <h4>
-              {" "}
               <span style={{ color: "rgb(100, 100, 100)" }}>Fats </span>:{" "}
               {meal.fats}
             </h4>
             <h4>
-              {" "}
               <span style={{ color: "rgb(100, 100, 100)" }}>Recipe </span>:{" "}
               {meal.recipe}
             </h4>
-          </Modal>
-        </div>
-        <div>
-          <Modal
-            open={RatingModal}
-            onClose={() => setRatingModal(false)}
-            center
-            classNames={{
-              overlay: "customOverlay",
-              modal: "customModal",
-            }}
-          >
-            <Col
+            <Row
               style={{
-                flexDirection: "column",
                 justifyContent: "space-between",
-                height: "45%",
-                width: "100%",
+                marginBottom: 15,
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 10,
               }}
             >
-              <h5
-                style={{
-                  color: "#FF748C",
-                  textAlign: "center",
-                  fontSize: "2.9vh",
-                }}
+              <Button
+                variant="success"
+                style={{ textAlign: "center", width: "20%" }}
+                onClick={() => _changeMealStatus("Approve")}
               >
-                Your selected meals for today :
-              </h5>
-              <div style={{ color: "#FF748C", textAlign: "center" }}>
-                {selectedMeals.map((meal) => {
-                  return <span>{meal.name} ,</span>;
-                })}
-              </div>
-            </Col>
-            <Box
-              component="fieldset"
-              mb={0}
-              borderColor="transparent"
-              style={{
-                width: "100%",
-                color: "#24b5a9 ",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <Typography component="legend" style={{ fontSize: "2.5vh" }}>
-                Set your reaction :
-              </Typography>
-              <Rating
-                name="customized-icons"
-                defaultValue={RatingValue}
-                getLabelText={(value) => customIcons[value].label}
-                IconContainerComponent={IconContainer}
-                onChange={(event, newValue) => {
-                  setRatingValue(newValue);
-                }}
-                style={{ padding: 10 }}
-              />
-            </Box>
+                Accept
+              </Button>
 
-            <button
-              type="button"
-              className="btn btn-outline-info"
-              onClick={() => _Save()}
-            >
-              Submit
-            </button>
+              <Button
+                variant="secondary"
+                style={{ textAlign: "center", width: "20%" }}
+                onClick={() => onCloseModal()}
+              >
+                Close
+              </Button>
+              <Button
+                variant="danger"
+                style={{ textAlign: "center", width: "20%" }}
+                onClick={() => _changeMealStatus("Reject")}
+              >
+                Reject
+              </Button>
+            </Row>
           </Modal>
-        </div>
-
-        <div>
-          <Row>
-            <Col style={{ textAlign: "center" }}>
-              <h5 style={{ color: "#FF748C" }}>
-                Submit Todays selections ★★★★
-              </h5>
-              <br />
-
-              <button
-                type="button"
-                className="btn btn-info"
-                onClick={() => setRatingModal(true)}
-                style={{
-                  width: "25%",
-                  fontSize: 25,
-                }}
-              >
-                My reaction ☺{" "}
-              </button>
-            </Col>
-          </Row>
         </div>
       </Container>
     </>

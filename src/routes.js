@@ -5,10 +5,12 @@ import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
 import Notifications from "views/Notifications.js";
 import Login from "components/Login.js";
+import Register from "components/Register";
+import Approval from "views/Approve.js";
 let logval = localStorage.getItem("isLoggedIn");
 let dashboardRoutes = [];
 if (logval !== null) {
-  console.log("inside");
+  let status = localStorage.getItem("isCustomer");
   dashboardRoutes = [
     {
       path: "/dashboard",
@@ -38,22 +40,30 @@ if (logval !== null) {
       component: Typography,
       layout: "/admin",
     },
-    {
-      path: "/icons",
-      name: "Icons",
-      icon: "nc-icon nc-atom",
-      component: Icons,
-      layout: "/admin",
-    },
+    // {
+    //   path: "/icons",
+    //   name: "Icons",
+    //   icon: "nc-icon nc-atom",
+    //   component: Icons,
+    //   layout: "/admin",
+    // },
 
-    {
-      path: "/notifications",
-      name: "Notifications",
-      icon: "nc-icon nc-bell-55",
-      component: Notifications,
-      layout: "/admin",
-    },
+    // {
+    //   path: "/notifications",
+    //   name: "Notifications",
+    //   icon: "nc-icon nc-bell-55",
+    //   component: Notifications,
+    //   layout: "/admin",
+    // },
   ];
+  if (status !== "Customer")
+    dashboardRoutes.push({
+      path: "/Approval",
+      name: "Approve",
+      icon: "nc-icon nc-check-2",
+      component: Approval,
+      layout: "/admin",
+    });
 } else {
   dashboardRoutes = [
     {
@@ -61,6 +71,13 @@ if (logval !== null) {
       name: "Login",
       icon: "nc-bank nc-circle-09",
       component: Login,
+      layout: "/admin",
+    },
+    {
+      path: "/register",
+      name: "Register",
+      icon: "nc-bank nc-circle-09",
+      component: Register,
       layout: "/admin",
     },
   ];

@@ -16,10 +16,6 @@ export default function Login() {
   function handleSubmit(event) {
     event.preventDefault();
   }
-  const submit = () => {
-    localStorage.setItem("testToken", 123);
-    console.log(localStorage.getItem("testToken"));
-  };
 
   async function _login() {
     let isloggedin = false;

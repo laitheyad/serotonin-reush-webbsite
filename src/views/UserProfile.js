@@ -149,6 +149,7 @@ function User() {
     };
     notificationAlertRef.current.notificationAlert(options);
   };
+  let status = localStorage.getItem("isCustomer");
   return (
     <>
       <Container fluid>
@@ -255,11 +256,21 @@ function User() {
               <Card.Body>
                 <div className="author">
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={"https://serotoninrush.tech" + user.avatar}
-                    ></img>
+                    {user.avatar !== null && (
+                      <img
+                        alt="..."
+                        className="avatar border-gray"
+                        src={"https://serotoninrush.tech" + user.avatar}
+                      ></img>
+                    )}
+                    {user.avatar === null && (
+                      <img
+                        alt="..."
+                        className="avatar border-gray"
+                        src={require("../assets/img/profile.png").default}
+                        style={{ backgroundColor: "#fff" }}
+                      ></img>
+                    )}
                     <h5 className="title">
                       {user.first_name} {user.last_name}
                     </h5>
@@ -267,6 +278,8 @@ function User() {
                   <p className="description">{username}</p>
                 </div>
                 <p className="description text-center">"{location}"</p>
+
+                <p className="description text-center">Role: {status}</p>
               </Card.Body>
               <hr></hr>
               <div className="button-container mr-auto ml-auto">
