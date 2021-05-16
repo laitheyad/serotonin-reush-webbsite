@@ -7,12 +7,12 @@ import "react-responsive-modal/styles.css";
 import Grid from "@material-ui/core/Grid";
 import "../components/Login.css";
 import Loader from "react-loader-spinner";
-
+import "../components/Login.css";
 function TableList() {
-  const [meals, setMeals] = React.useState([]);
+  const [meal, setMeal] = React.useState([]);
   const [open, setOpen] = useState(false);
-  const [meal, setMeal] = useState({});
-  const [selectedMeals, setSelectedMeals] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [best, setBest] = useState("");
   const notificationAlertRef = React.useRef(null);
 
   const notify = (place, color, msg = "") => {
@@ -51,116 +51,42 @@ function TableList() {
     notificationAlertRef.current.notificationAlert(options);
   };
 
-  const AddMeal = (id) => {
-    let meal_object = meals.filter((meal) => {
-      return meal.id == id;
-    });
-    let selected = selectedMeals;
-    if (!selectedMeals.includes(meal_object[0])) {
-      selected.push(meal_object[0]);
-      setSelectedMeals(selected);
-      notify(
-        "tc",
-        2,
-        "The meal : " + meal_object[0].name + " Has been selected seccussfully"
-      );
-    } else {
-      notify(
-        "tc",
-        3,
-        "The meal : " +
-          meal_object[0].name +
-          " already selected, it can't be added again !"
-      );
-    }
-  };
-  const RemoveMeal = (id) => {
-    let selected = [];
-    var s_meal;
-    let flag = false;
-    for (let i = 0; i < selectedMeals.length; i++) {
-      if (selectedMeals[i].id == id) {
-        s_meal = selectedMeals[i].name;
-
-        flag = true;
-      } else {
-        selected.push(selectedMeals[i]);
-      }
-    }
-    if (flag)
-      notify(
-        "tc",
-        1,
-        "The meal : " + s_meal + " Has been deleted seccussfully"
-      );
-    else notify("tc", 3, "This meal Is not selected , you cant delete it !");
-    setSelectedMeals(selected);
-  };
-
   const onOpenModal = (id) => {
-    let meal_object = meals.filter((meal) => {
+    let meal_object = suggestions.filter((meal) => {
       return meal.id == id;
     });
     setMeal(meal_object[0]);
     setOpen(true);
   };
   const onCloseModal = () => setOpen(false);
-  async function getMeals() {
-    var header = new Headers();
-    header.append("Authorization", "Token " + localStorage.getItem("token"));
-    var requestOptions = {
-      method: "GET",
-      headers: header,
-      redirect: "follow",
-    };
-    await fetch("https://serotoninrush.tech/pending_meals/", requestOptions)
-      .then((response) => response.text())
-      .then(async (result) => {
-        let response = await JSON.parse(result);
-        setMeals(response.pending_meals);
-      });
-  }
-  useEffect(() => {
-    getMeals();
-  }, []);
-  async function _changeMealStatus(state) {
-    onCloseModal();
-    let header = new Headers();
+  async function _getSuggestions() {
+    let token = localStorage.getItem("token");
     let form = new FormData();
-    form.append("pk", meal.id);
-    form.append("state", state);
-    header.append("Authorization", "Token " + localStorage.getItem("token"));
+    form.append("token", token);
+    let header = new Headers();
+    header.append("Authorization", "Token " + token);
     var requestOptions = {
       method: "POST",
       headers: header,
       body: form,
       redirect: "follow",
     };
-    await fetch(
-      "https://serotoninrush.tech/change_meal_status/",
-      requestOptions
-    )
+    await fetch("https://serotoninrush.tech/correlation/", requestOptions)
       .then((response) => response.text())
       .then(async (result) => {
         let response = await JSON.parse(result);
-        state === "Approve"
-          ? notify(
-              "tc",
-              2,
-              "This meal has been Approved seccessfully, Thank You for being helpfull"
-            )
-          : notify(
-              "tc",
-              5,
-              "This meal has been Rejected seccessfully, Thank You for being helpfull"
-            );
+        if (response.message === "error") {
+          return;
+        }
+        setSuggestions(response.meals);
+        setMeal(response.best_for_you);
       });
-
-    getMeals();
   }
+  useEffect(() => {
+    _getSuggestions();
+  }, []);
 
   function cut_string(string = "", len) {
-    console.log(string);
     if (string.length > len) {
       let text = string.substring(0, len);
       return text + " ...";
@@ -173,7 +99,7 @@ function TableList() {
       </div>
       <h4 style={{ color: "rgb(152,152,152)", textAlign: "center" }}>
         <mark>
-          Ｍｅａｌｓ　Ｔｈａｔ　ｎｅｅｄ＇ｓ　ｔｏ　ｂｅ　ａｐｐｒｏｖｅｄ
+          Ｂｅｓｔ　Ｍｅａｌｓ　Ｓｕｇｇｅｓｔｉｏｎｓ　ｆｏｒ　ｙｏｕ：
         </mark>
       </h4>
       <Container fluid>
@@ -189,8 +115,8 @@ function TableList() {
           >
             <Grid item xs={12}>
               <Grid container justify="center" spacing={6}>
-                {meals.length > 0 &&
-                  meals.map((meal) => (
+                {suggestions.length > 0 &&
+                  suggestions.map((meal) => (
                     <Grid key={meal.id} item>
                       <Card
                         style={{
@@ -239,7 +165,7 @@ function TableList() {
                       </Card>
                     </Grid>
                   ))}
-                {meals.length == 0 && (
+                {suggestions.length == 0 && (
                   <Loader
                     type="Circles"
                     color="#00BFFF"
@@ -294,7 +220,7 @@ function TableList() {
             </h4>
             <Row
               style={{
-                justifyContent: "space-between",
+                justifyContent: "center",
                 marginBottom: 15,
                 paddingLeft: 20,
                 paddingRight: 20,
@@ -302,26 +228,13 @@ function TableList() {
               }}
             >
               <Button
-                variant="success"
-                style={{ textAlign: "center", width: "20%" }}
-                onClick={() => _changeMealStatus("Approve")}
-              >
-                Accept
-              </Button>
-
-              <Button
                 variant="secondary"
+                size="lg"
+                block
                 style={{ textAlign: "center", width: "20%" }}
                 onClick={() => onCloseModal()}
               >
                 Close
-              </Button>
-              <Button
-                variant="danger"
-                style={{ textAlign: "center", width: "20%" }}
-                onClick={() => _changeMealStatus("Reject")}
-              >
-                Reject
               </Button>
             </Row>
           </Modal>

@@ -200,17 +200,21 @@ function TableList() {
       <div className="rna-container">
         <NotificationAlert ref={notificationAlertRef} />
       </div>
-      <h4 style={{ color: "rgb(152,152,152)" }}>
-        <mark>𝒞𝒽𝑜𝑜𝓈𝑒 𝓎𝑜𝓊𝓇 𝒽𝒶𝓅𝓅𝓎 𝓂𝑒𝒶𝓁:</mark>
+      <h4 style={{ color: "rgb(152,152,152)", textAlign: "center" }}>
+        <mark>ｃｈｏｏｓｅ　ｙｏｕｒ　ｔｏｄａｙ＇ｓ　ｍｅａｌｓ </mark>
       </h4>
       <Container fluid>
         {
           <Grid
             container
-            spacing={4}
-            style={{ height: "70Vh", overflowY: "scroll", marginTop: 10 }}
+            style={{
+              height: "68Vh",
+              overflowY: "scroll",
+              marginTop: 20,
+              paddingLeft: 50,
+            }}
           >
-            <Grid item xs={11}>
+            <Grid item xs={12}>
               <Grid container justify="center" spacing={6}>
                 {meals.length > 0 &&
                   meals.map((meal) => (

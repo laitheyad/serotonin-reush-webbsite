@@ -39,25 +39,6 @@ function Dashboard() {
   return (
     <>
       <Container fluid>
-        {/* <Row style={{ paddingLeft: 60 }}>
-          <div
-            style={{
-              backgroundImage: `url(${test} )`,
-              width: 900,
-              height: 300,
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <h6 style={{ fontSize: 20, paddingLeft: 50, paddingTop: 70 }}>
-              𝐒𝐞𝐫𝐨𝐭𝐨𝐧𝐢𝐧 𝐑𝐮𝐬𝐡
-            </h6>
-            <h5>" Good Food Means Good Mood" </h5>
-            <button type="button" className="btn btn-outline-danger">
-              Register Now!
-            </button>
-          </div>
-        </Row>
-        <hr /> */}
         <Row>
           <Col>
             <Card
@@ -68,7 +49,6 @@ function Dashboard() {
               }}
             >
               <Card.Title style={{ paddingLeft: 50 }}>
-                {" "}
                 <img
                   alt="..."
                   src={require("assets/img/sero.png").default}

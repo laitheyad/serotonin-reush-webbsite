@@ -7,6 +7,8 @@ import Notifications from "views/Notifications.js";
 import Login from "components/Login.js";
 import Register from "components/Register";
 import Approval from "views/Approve.js";
+import Suggettions from "views/suggestions.js";
+
 let logval = localStorage.getItem("isLoggedIn");
 let dashboardRoutes = [];
 if (logval !== null) {
@@ -35,9 +37,16 @@ if (logval !== null) {
     },
     {
       path: "/typography",
-      name: "𝘔𝘦𝘢𝘭𝘴 𝘚𝘦𝘵𝘵𝘪𝘯𝘨",
+      name: "Common",
       icon: "nc-icon nc-paper-2",
       component: Typography,
+      layout: "/admin",
+    },
+    {
+      path: "/suggettions",
+      name: "Suggettions",
+      icon: "nc-icon nc-zoom-split",
+      component: Suggettions,
       layout: "/admin",
     },
     // {

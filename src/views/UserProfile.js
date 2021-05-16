@@ -54,11 +54,12 @@ function User() {
       });
   }
   async function get_Info_by_token() {
+    let token = localStorage.getItem("token");
     var headers1 = new Headers();
-    headers1.append("Authorization", "Token " + localStorage.getItem("token"));
+    headers1.append("Authorization", "Token " + token);
 
     var formdata1 = new FormData();
-    formdata1.append("token", localStorage.getItem("token"));
+    formdata1.append("token", token);
 
     var requestOptions1 = {
       method: "POST",

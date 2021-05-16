@@ -49,3 +49,6 @@
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 }
+.add_meal_modal {
+  height: 1500;
+}
