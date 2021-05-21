@@ -13,17 +13,22 @@ import {
   Col,
 } from "react-bootstrap";
 import NotificationAlert from "react-notification-alert";
+import { createAdd } from "typescript";
+import razan from "../assets/img/razan.png";
+import { DataGrid } from "@material-ui/data-grid";
+import { data } from "jquery";
 
 function User() {
   const [user, get_user_info] = useState({});
   const [username, setusername] = useState();
   const [location, setLocation] = useState();
-
+  const [user_meals, setUserMeals] = useState([]);
   useEffect(async () => {
     get_Info_by_token();
     let user_inf = await localStorage.getItem("user_info");
     get_user_info(await JSON.parse(user_inf));
     setusername(localStorage.getItem("username"));
+    _get_user_meals();
     getLocation();
   }, []);
   function getLocation() {
@@ -72,7 +77,6 @@ function User() {
       .then((response) => response.text())
       .then(async (result) => {
         let response = await JSON.parse(result);
-        console.log(response);
         await localStorage.setItem(
           "user_info",
           JSON.stringify(response.user_obj)
@@ -105,8 +109,6 @@ function User() {
       .then((response) => response.text())
       .then(async (result) => {
         let response = await JSON.parse(result);
-        console.log(response);
-
         if (response.message === "success") {
           notify("tc", 2, "Your informations has been updated seccussfully");
         } else {
@@ -114,6 +116,40 @@ function User() {
         }
       });
   }
+  async function _get_user_meals() {
+    var formdata = new FormData();
+    formdata.append("token", localStorage.getItem("token"));
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    await fetch(
+      "https://serotoninrush.tech/API/user_reactions_info/",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then(async (result) => {
+        result = JSON.parse(result);
+        let data = [];
+        result = result.reactions;
+        for (let i = 0; i < result.length; i++) {
+          console.log("r", result[i]);
+          data.push({
+            id: result[i].id,
+            meal_id: result[i].meal_id,
+            reaction: result[i].reaction,
+            date: result[i].date,
+          });
+        }
+        console.log(data);
+        setUserMeals(data);
+      })
+      .catch((error) => console.log("error", error));
+  }
+
   const notificationAlertRef = React.useRef(null);
   const notify = (place, color, msg) => {
     var type;
@@ -151,6 +187,12 @@ function User() {
     notificationAlertRef.current.notificationAlert(options);
   };
   let status = localStorage.getItem("isCustomer");
+  const columns = [
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "meal_id", headerName: "Meal name", width: 150 },
+    { field: "reaction", headerName: "Reaction", width: 150 },
+    { field: "date", headerName: "Date", width: 150 },
+  ];
   return (
     <>
       <Container fluid>
@@ -312,7 +354,36 @@ function User() {
             </Card>
           </Col>
         </Row>
-        <hr />
+        <Row>
+          <Card
+            style={{
+              width: "65%",
+              height: "50%",
+              // marginLeft: "15%",
+            }}
+          >
+            <Card.Title
+              style={{ marginLeft: "5%", marginTop: "3%", textAlign: "center" }}
+            >
+              <h4>Your Meals</h4>
+            </Card.Title>
+            <div
+              style={{
+                top: -30,
+                right: -40,
+                position: "absolute",
+              }}
+            ></div>
+            <div style={{ height: 400, width: "100%" }}>
+              <DataGrid
+                rows={user_meals}
+                columns={columns}
+                pageSize={5}
+                checkboxSelection
+              />
+            </div>
+          </Card>
+        </Row>
       </Container>
     </>
   );

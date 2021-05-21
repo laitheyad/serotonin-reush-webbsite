@@ -7,17 +7,40 @@ import brr from "../assets/img/brr.png";
 import border from "../assets/img/border.png";
 import br22 from "../assets/img/br22.png";
 import mealbg from "../assets/img/mealbg.png";
+// import eat from "../assets/img/eat.jpg";
+// import eat1 from "../assets/img/eat1.jpg";
 import { Modal } from "react-responsive-modal";
 import Grid from "@material-ui/core/Grid";
+
+import { Form } from "react-bootstrap";
 
 // react-bootstrap components
 import { Badge, Button, Card, Container, Row, Col } from "react-bootstrap";
 import ScrollMenu from "react-horizontal-scrolling-menu";
+import { event } from "jquery";
 
 function Dashboard() {
   const [aModal, setaModal] = useState(false);
   const [bModal, setbModal] = useState(false);
+  const [cModal, setcModal] = useState(false);
+  const [dModal, setdModal] = useState(false);
+  const [eModal, seteModal] = useState(false);
   const [news, setNews] = useState([]);
+  const [weight, setWeight] = useState();
+  const [height, setHeight] = useState();
+  const [perfect, setPerfect] = useState();
+
+  function calculate() {
+    let perfect = (weight / (height / 100)) ^ 2;
+    setPerfect(perfect);
+    let span = document.getElementById("perfect");
+    console.log(span);
+    if (perfect > 25) {
+      span.innerHTML = perfect + " " + "overweight";
+    } else {
+      span.innerHTML = perfect + " " + "not overweight";
+    }
+  }
   async function _getNews() {
     await fetch("https://serotoninrush.tech/API/news/")
       .then((response) => response.text())
@@ -45,6 +68,7 @@ function Dashboard() {
               style={{
                 height: 230,
                 width: 200,
+                borderRadius: "5%",
                 backgroundImage: `url(${br22} )`,
               }}
             >
@@ -78,6 +102,7 @@ function Dashboard() {
               style={{
                 height: 230,
                 width: 200,
+                borderRadius: "5%",
                 backgroundImage: `url(${border} )`,
               }}
             >
@@ -112,6 +137,7 @@ function Dashboard() {
               style={{
                 height: 230,
                 width: 200,
+                borderRadius: "5%",
                 backgroundImage: `url(${brr} )`,
               }}
             >
@@ -130,6 +156,7 @@ function Dashboard() {
                   <button
                     type="button"
                     className="btn btn-outline-warning"
+                    onClick={() => setcModal(true)}
                     style={{ height: 30, width: 80, fontSize: 12 }}
                   >
                     𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
@@ -183,56 +210,80 @@ function Dashboard() {
         </Row>
         <hr />
         <Row>
-          <div style={{ paddingLeft: 400 }}>𝘉𝘖𝘋𝘠 𝘏𝘌𝘈𝘓𝘛𝘏</div>
+          <div style={{ paddingLeft: 400, color: "#065f8c" }}>𝘉𝘖𝘋𝘠 𝘏𝘌𝘈𝘓𝘛𝘏</div>
         </Row>
         <Row>
-          <Card
-            style={{
-              height: 270,
-              width: 200,
-              backgroundImage: `url(${size1} )`,
-              backgroundRepeat: "no-repeat",
-            }}
-          ></Card>
-          <div style={{ paddingLeft: 60 }}>
-            <h6 style={{ paddingTop: 30, color: "#39b8b8" }}>
+          <div>
+            <h6>𝐂𝐡𝐞𝐜𝐤 𝐲𝐨𝐮𝐫 𝐛𝐨𝐝𝐲 𝐡𝐞𝐚𝐥𝐭𝐡</h6>
+            {/* <img
+              alt="..."
+              src={require("assets/img/pngtree.png").default}
+              style={{ height: 200, width: 190 }}
+            ></img> */}
+          </div>
+          <div style={{ paddingLeft: 10 }}>
+            <h6 style={{ paddingTop: 30, color: "#9dd2ed" }}>
               {" "}
-              𝒫𝓊𝒷𝓁𝒾𝒸 𝐻𝑒𝒶𝓁𝓉𝒽 𝒯𝑜𝑜𝓁𝓈!
+              𝚙𝚞𝚋𝚕𝚒𝚌 𝚑𝚎𝚊𝚕𝚝𝚑 𝚝𝚘𝚘𝚕!
+            </h6>
+            <h6 style={{ fontSize: 10 }}>
+              {" "}
+              𝗬𝗼𝘂 𝗻𝗲𝗲𝗱 𝘁𝗼 𝘂𝘀𝗲 𝘁𝗵𝗲 𝗕𝗠𝗜 𝘁𝗼𝗼𝗹 𝘄𝗵𝗲𝗻 𝘆𝗼𝘂 𝘄𝗮𝗻𝘁 𝘁𝗼 <br />
+              𝗱𝗲𝘁𝗲𝗿𝗺𝗶𝗻𝗲 𝗶𝗳 𝘆𝗼𝘂 𝘄𝗮𝗻𝘁 𝘁𝗼 𝗹𝗼𝘀𝗲 𝗼𝗿 𝗿𝗮𝗶𝘀𝗲 𝘄𝗲𝗶𝗴𝗵𝘁 :
             </h6>
             <div style={{ paddingTop: 30 }}>
-              <button type="button" className="btn btn-danger">
+              <button
+                type="button"
+                className="btn "
+                style={{ backgroundColor: "#9dd2ed" }}
+                onClick={() => setdModal(true)}
+              >
                 𝘉𝘖𝘋𝘠 𝘔𝘈𝘚𝘚 𝘐𝘕𝘋𝘌𝘟
               </button>{" "}
               <br></br>
             </div>
             <div style={{ paddingTop: 20 }}>
-              <button type="button" className="btn btn-danger">
-                𝘠𝘖𝘜𝘙 𝘗𝘌𝘙𝘍𝘌𝘊𝘛 𝘞𝘌𝘐𝘎𝘏𝘛{" "}
+              <button
+                type="button"
+                className="btn "
+                onClick={() => seteModal(true)}
+                style={{ backgroundColor: "#9dd2ed" }}
+              >
+                How its works?
               </button>
             </div>
             <div style={{ paddingTop: 20 }}>
-              {" "}
-              <button type="button" className="btn btn-danger">
-                Danger
-              </button>
+              <label style={{ fontSize: 10 }}>
+                {" "}
+                <footer>
+                  To know more about losing weight check this page:
+                </footer>{" "}
+                <br />
+                <a href="https://www.healthline.com/health/best-weight-loss-blogs-of-the-year#3">
+                  see page
+                </a>{" "}
+              </label>
             </div>
           </div>
-          <div>
-            <img
-              alt="..."
-              src={require("assets/img/ht.png").default}
-              style={{ height: 300, width: 190 }}
-            ></img>
-          </div>
 
-          <div>
-            <p>
-              <mark> Why you should know your BMI?</mark>
-            </p>
-            <p>
-              {" "}
-              <mark>What is the Human Perfect Weight ?</mark>
-            </p>
+          <div style={{ marginLeft: "10%" }}>
+            <Card
+              style={{ width: 300, height: 130, backgroundColor: "#9dd2ed" }}
+            >
+              <p> why you should know your BMI?</p>
+              <p style={{ fontSize: 10 }}>
+                Your BMI is a measurement that is a ratio of your weight and
+                height. It's a good way to gauge whether your weight is in
+                healthy proportion to your height. In fact, knowing your BMI can
+                help you – and your GP – determine any health risks you may face
+                if it's outside of the healthy range.
+              </p>
+            </Card>
+            {/* <img
+              alt="..."
+              src={require("assets/img/test.png").default}
+              style={{ height: 190, width: 200 }}
+            ></img> */}
           </div>
         </Row>
         <hr />
@@ -286,21 +337,134 @@ function Dashboard() {
           </Card>
         </Modal>
         <Modal open={bModal} onClose={() => setbModal(false)} center>
-          <Card>
-            <div className="carousel-container" id="example">
-              <div className="carousel">
-                <div className="carousel-item">
-                  <div className="your-item-class">1</div>
-                </div>
-                <div className="carousel-item">
-                  <div className="your-item-class">2</div>
-                </div>
+          {/* <Card
+            style={{
+              backgroundImage: `url(${eat} )`,
+              backgroundSize: 400,
+              height: 400,
+              width: 400,
+            }}
+          ></Card> */}
+        </Modal>
+        <Modal open={cModal} onClose={() => setcModal(false)} center>
+          {/* <Card
+            style={{
+              backgroundImage: `url(${eat1} )`,
+              backgroundSize: 400,
 
-                <div className="carousel-button-next your-button-class">👉</div>
-                <div className="carousel-button-prev your-button-class">👈</div>
-              </div>
-            </div>
-          </Card>
+              height: 500,
+              width: 400,
+            }}
+          >
+            {" "}
+          </Card> */}
+        </Modal>
+
+        <Modal open={dModal} onClose={() => setdModal(false)} center>
+          <Form
+            style={{
+              height: 350,
+              width: 350,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <hr />
+
+            <Row>
+              <Col>
+                <Form.Group>
+                  <Form.Label> Your Weight:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="50 in Kilo "
+                    style={{ width: 140 }}
+                    value={weight}
+                    onChange={(e) => {
+                      setWeight(e.target.value);
+                    }}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col>
+                <Form.Group>
+                  <Form.Label>Your Height::</Form.Label>
+                  <Form.Control
+                    type="text"
+                    style={{ width: 140 }}
+                    placeholder="160 in cm "
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col style={{ paddingTop: 30 }}>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => calculate()}
+                >
+                  Calculate
+                </button>
+              </Col>
+            </Row>
+            <p
+              id="perfect"
+              style={{
+                textAlign: "center",
+                width: "100%",
+                backgroundColor: "rgba(200,200,200,0.6)",
+                padding: 5,
+                borderRadius: 15,
+              }}
+            ></p>
+            <p
+              style={{
+                backgroundColor: "rgba(200,200,200,0.6)",
+                padding: 5,
+                borderRadius: 15,
+              }}
+            >
+              A BMI of 25.0 or more is overweight, while the healthy range is
+              18.5 to 24.9. BMI applies to most adults 18-65 years.
+            </p>
+          </Form>
+        </Modal>
+        <Modal open={eModal} onClose={() => seteModal(false)} center>
+          <Row>
+            <h6> What is the perfect weight?How you can know it ? </h6>
+          </Row>
+          <Form
+            style={{
+              height: 300,
+              width: 300,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Row>
+              <Col>
+                <Form.Group>
+                  <Form.Label>Your Height::</Form.Label>
+                  <Form.Control
+                    type="text"
+                    style={{ width: 140 }}
+                    placeholder="160 in cm "
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col style={{ paddingTop: 30 }}>
+                <button type="button" className="btn btn-danger">
+                  Calculate{" "}
+                </button>
+              </Col>
+            </Row>
+          </Form>
         </Modal>
       </Container>
     </>

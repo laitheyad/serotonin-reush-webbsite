@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 import logo from "../assets/img/log.png";
 import NotificationAlert from "react-notification-alert";
+import { Route, useHistory } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -47,9 +48,11 @@ export default function Login() {
           // Context._currentValue.user_info = response.user_obj;
           // Context._currentValue.username = response.username;
           notify("tc", 2, response.message);
-
-          window.location = "/admin/dashboard";
-          history.push("/admin");
+          setTimeout(() => {
+            (window.location = "/admin/dashboard"), 1000;
+          });
+          // window.location = "/admin/dashboard";
+          // Route.push("/admin/dashboard");
         } else {
           notify("tc", 1, response.message);
         }

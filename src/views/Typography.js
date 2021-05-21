@@ -15,6 +15,12 @@ function Typography() {
   const [user, setUserInfo] = useState({});
   const [suggestions, setSuggestions] = useState({});
   const [best, setBest] = useState("");
+  const [carbohydrate, setCarbohydrate] = useState("");
+  const [calories, setCalories] = useState("");
+  const [protein, setProtein] = useState("");
+  const [fats, setFats] = useState("");
+  const [name, setName] = useState("");
+  const [recipe, setRecipe] = useState("");
 
   async function _getSuggestions() {
     let token = localStorage.getItem("token");
@@ -44,6 +50,25 @@ function Typography() {
     setUserInfo(JSON.parse(user_info));
     _getSuggestions();
   }, []);
+  async function _create_meal() {
+    var formdata = new FormData();
+    formdata.append("name", name);
+    formdata.append("carbohydrate", carbohydrate);
+    formdata.append("fats", fats);
+    formdata.append("calories", calories);
+    formdata.append("recipe", recipe);
+    formdata.append("protein", protein);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("https://serotoninrush.tech/create_meal/", requestOptions).catch(
+      (error) => console.log("error", error)
+    );
+  }
   return (
     <>
       {/* <h5 style={{ textAlign: "center", color: " #4C4785", fontSize: 22 }}> */}
@@ -245,6 +270,9 @@ function Typography() {
                   type="text"
                   placeholder="Burger "
                   style={{ width: 140 }}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -271,6 +299,9 @@ function Typography() {
                   type="text"
                   style={{ width: 70 }}
                   placeholder="46"
+                  onChange={(e) => {
+                    setCarbohydrate(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -281,6 +312,9 @@ function Typography() {
                   type="text"
                   style={{ width: 70 }}
                   placeholder="30"
+                  onChange={(e) => {
+                    setProtein(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -291,6 +325,9 @@ function Typography() {
                   type="text"
                   style={{ width: 70 }}
                   placeholder="5"
+                  onChange={(e) => {
+                    setFats(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -301,6 +338,9 @@ function Typography() {
                   type="text"
                   style={{ width: 70 }}
                   placeholder="10"
+                  onChange={(e) => {
+                    setCalories(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -314,11 +354,18 @@ function Typography() {
                   id="exampleFormControlTextarea1"
                   rows="3"
                   placeholder="Seperated by comma , "
+                  onChange={(e) => {
+                    setRecipe(e.target.value);
+                  }}
                 ></textarea>
               </div>
             </Col>
             <Col style={{ paddingTop: 30 }}>
-              <button type="button" className="btn btn-warning">
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={() => _create_meal()}
+              >
                 Submit
               </button>
             </Col>
