@@ -6,9 +6,10 @@ import size1 from "../assets/img/size1.png";
 import brr from "../assets/img/brr.png";
 import border from "../assets/img/border.png";
 import br22 from "../assets/img/br22.png";
+import bgg from "../assets/img/bgg.png";
 import mealbg from "../assets/img/mealbg.png";
-// import eat from "../assets/img/eat.jpg";
-// import eat1 from "../assets/img/eat1.jpg";
+import eat from "../assets/img/eat.jpg";
+import eat1 from "../assets/img/eat1.jpg";
 import { Modal } from "react-responsive-modal";
 import Grid from "@material-ui/core/Grid";
 
@@ -62,109 +63,129 @@ function Dashboard() {
   return (
     <>
       <Container fluid>
-        <Row>
-          <Col>
-            <Card
-              style={{
-                height: 230,
-                width: 200,
-                borderRadius: "5%",
-                backgroundImage: `url(${br22} )`,
-              }}
-            >
-              <Card.Title style={{ paddingLeft: 50 }}>
-                <img
-                  alt="..."
-                  src={require("assets/img/sero.png").default}
-                  style={{ height: 100, width: 100 }}
-                ></img>
-              </Card.Title>
-              <Card.Body>
-                <label style={{ fontSize: 10, paddingLeft: 10 }}>
-                  {" "}
-                  How can this site helps you?
-                </label>
-                <div style={{ paddingLeft: 50, paddingTop: 10 }}>
-                  <button
-                    type="button"
-                    className="btn btn-outline-success"
-                    onClick={() => setaModal(true)}
-                    style={{ height: 30, width: 80, fontSize: 12 }}
-                  >
-                    𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
-                  </button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card
-              style={{
-                height: 230,
-                width: 200,
-                borderRadius: "5%",
-                backgroundImage: `url(${border} )`,
-              }}
-            >
-              <Card.Title style={{ paddingLeft: 50 }}>
-                {" "}
-                <img
-                  alt="..."
-                  src={require("assets/img/heartt.png").default}
-                  style={{ height: 80, width: 80 }}
-                ></img>
-              </Card.Title>
-              <Card.Body>
-                <label style={{ fontSize: 10, paddingLeft: 10 }}>
-                  {" "}
-                  Medical Advices for eating routine!
-                </label>
-                <div style={{ paddingLeft: 50, paddingTop: 10 }}>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => setbModal(true)}
-                    style={{ height: 30, width: 80, fontSize: 12 }}
-                  >
-                    𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
-                  </button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card
-              style={{
-                height: 230,
-                width: 200,
-                borderRadius: "5%",
-                backgroundImage: `url(${brr} )`,
-              }}
-            >
-              <Card.Title style={{ paddingLeft: 50 }}>
-                <img
-                  alt="..."
-                  src={require("assets/img/cook.png").default}
-                  style={{ height: 80, width: 80 }}
-                ></img>
-              </Card.Title>
-              <Card.Body>
-                <label style={{ fontSize: 10, paddingLeft: 30 }}>
-                  Best Diets Routine!
-                </label>
-                <div style={{ paddingLeft: 50, paddingTop: 10 }}>
-                  <button
-                    type="button"
-                    className="btn btn-outline-warning"
-                    onClick={() => setcModal(true)}
-                    style={{ height: 30, width: 80, fontSize: 12 }}
-                  >
-                    𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
-                  </button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
+        <Row
+          style={{
+            width: "100%",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Card
+            style={{
+              height: 230,
+              width: 220,
+              borderRadius: "5%",
+              backgroundImage: `url(${br22} )`,
+            }}
+          >
+            <Card.Title style={{ paddingLeft: 50 }}>
+              <img
+                alt="..."
+                src={require("assets/img/sero.png").default}
+                style={{ height: 100, width: 100 }}
+              ></img>
+            </Card.Title>
+            <Card.Body>
+              <label
+                style={{
+                  fontSize: 10,
+                  paddingLeft: 10,
+                  maxWidth: "80%",
+                  textAlign: "center",
+                }}
+              >
+                How can this site helps you?
+              </label>
+              <div style={{ paddingLeft: 50, paddingTop: 10 }}>
+                <button
+                  type="button"
+                  className="btn btn-outline-success"
+                  onClick={() => setaModal(true)}
+                  style={{ height: 30, width: 80, fontSize: 12 }}
+                >
+                  𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
+                </button>
+              </div>
+            </Card.Body>
+          </Card>
+
+          <Card
+            style={{
+              height: 230,
+              width: 220,
+              borderRadius: "5%",
+              backgroundImage: `url(${border} )`,
+            }}
+          >
+            <Card.Title style={{ paddingLeft: 50 }}>
+              {" "}
+              <img
+                alt="..."
+                src={require("assets/img/heartt.png").default}
+                style={{ height: 80, width: 80 }}
+              ></img>
+            </Card.Title>
+            <Card.Body>
+              <label
+                style={{
+                  fontSize: 10,
+                  paddingLeft: 10,
+                  maxWidth: "80%",
+                  textAlign: "center",
+                }}
+              >
+                Medical Advices for eating routine!
+              </label>
+              <div style={{ paddingLeft: 50, paddingTop: 10 }}>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger"
+                  onClick={() => setbModal(true)}
+                  style={{ height: 30, width: 80, fontSize: 12 }}
+                >
+                  𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
+                </button>
+              </div>
+            </Card.Body>
+          </Card>
+
+          <Card
+            style={{
+              height: 230,
+              width: 220,
+              borderRadius: "5%",
+              backgroundImage: `url(${brr} )`,
+            }}
+          >
+            <Card.Title style={{ paddingLeft: 50 }}>
+              <img
+                alt="..."
+                src={require("assets/img/cook.png").default}
+                style={{ height: 80, width: 80 }}
+              ></img>
+            </Card.Title>
+            <Card.Body>
+              <label
+                style={{
+                  fontSize: 10,
+                  paddingLeft: 10,
+                  maxWidth: "80%",
+                  textAlign: "center",
+                }}
+              >
+                Best Diets Routine!
+              </label>
+              <div style={{ paddingLeft: 50, paddingTop: 10 }}>
+                <button
+                  type="button"
+                  className="btn btn-outline-warning"
+                  onClick={() => setcModal(true)}
+                  style={{ height: 30, width: 80, fontSize: 12 }}
+                >
+                  𝐋𝐞𝐭𝐬 𝐬𝐞𝐞!
+                </button>
+              </div>
+            </Card.Body>
+          </Card>
         </Row>
         <hr />
         <Row>
@@ -209,17 +230,24 @@ function Dashboard() {
           </div>
         </Row>
         <hr />
-        <Row>
-          <div style={{ paddingLeft: 400, color: "#065f8c" }}>𝘉𝘖𝘋𝘠 𝘏𝘌𝘈𝘓𝘛𝘏</div>
+        <Row style={{ width: "100%", justifyContent: "center" }}>
+          <h3
+            style={{
+              textAlign: "center",
+              color: "#065f8c",
+            }}
+          >
+            𝘉𝘖𝘋𝘠 𝘏𝘌𝘈𝘓𝘛𝘏
+          </h3>
         </Row>
-        <Row>
+        <Row style={{ width: "100%", justifyContent: "center" }}>
           <div>
             <h6>𝐂𝐡𝐞𝐜𝐤 𝐲𝐨𝐮𝐫 𝐛𝐨𝐝𝐲 𝐡𝐞𝐚𝐥𝐭𝐡</h6>
-            {/* <img
+            <img
               alt="..."
               src={require("assets/img/pngtree.png").default}
               style={{ height: 200, width: 190 }}
-            ></img> */}
+            ></img>
           </div>
           <div style={{ paddingLeft: 10 }}>
             <h6 style={{ paddingTop: 30, color: "#9dd2ed" }}>
@@ -279,11 +307,11 @@ function Dashboard() {
                 if it's outside of the healthy range.
               </p>
             </Card>
-            {/* <img
+            <img
               alt="..."
               src={require("assets/img/test.png").default}
               style={{ height: 190, width: 200 }}
-            ></img> */}
+            ></img>
           </div>
         </Row>
         <hr />
@@ -337,17 +365,17 @@ function Dashboard() {
           </Card>
         </Modal>
         <Modal open={bModal} onClose={() => setbModal(false)} center>
-          {/* <Card
+          <Card
             style={{
               backgroundImage: `url(${eat} )`,
               backgroundSize: 400,
               height: 400,
               width: 400,
             }}
-          ></Card> */}
+          ></Card>
         </Modal>
         <Modal open={cModal} onClose={() => setcModal(false)} center>
-          {/* <Card
+          <Card
             style={{
               backgroundImage: `url(${eat1} )`,
               backgroundSize: 400,
@@ -357,7 +385,7 @@ function Dashboard() {
             }}
           >
             {" "}
-          </Card> */}
+          </Card>
         </Modal>
 
         <Modal open={dModal} onClose={() => setdModal(false)} center>
@@ -435,36 +463,28 @@ function Dashboard() {
           </Form>
         </Modal>
         <Modal open={eModal} onClose={() => seteModal(false)} center>
-          <Row>
-            <h6> What is the perfect weight?How you can know it ? </h6>
-          </Row>
-          <Form
-            style={{
-              height: 300,
-              width: 300,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+          <Card
+            style={{ height: 240, width: 450, backgroundImage: `url(${bgg} )` }}
           >
-            <Row>
-              <Col>
-                <Form.Group>
-                  <Form.Label>Your Height::</Form.Label>
-                  <Form.Control
-                    type="text"
-                    style={{ width: 140 }}
-                    placeholder="160 in cm "
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col style={{ paddingTop: 30 }}>
-                <button type="button" className="btn btn-danger">
-                  Calculate{" "}
-                </button>
-              </Col>
+            <Row style={{ justifyContent: "center" }}>
+              <h5 style={{ textAlign: "center", marginTop: 10 }}>
+                What is the perfect weight?How you can know it ?
+              </h5>
+              <br />
             </Row>
-          </Form>
+            <Row style={{ fontSize: 14, justifyContent: "center" }}>
+              <p style={{ textAlign: "center", padding: 20 }}>
+                Body Mass Index is a simple calculation using a person’s height
+                and weight.
+                <br /> The formula is BMI = kg/m2 where kg is a person’s weight
+                in kilograms and m2 is their height in metres squared.
+                <br />
+                A BMI of 25.0 or more is overweight,
+                <br /> while the healthy range is 18.5 to 24.9. BMI applies to
+                most adults 18-65 years
+              </p>
+            </Row>
+          </Card>{" "}
         </Modal>
       </Container>
     </>
