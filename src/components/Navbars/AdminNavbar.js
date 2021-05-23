@@ -59,7 +59,7 @@ function Header() {
                 onClick={(e) => e.preventDefault()}
               >
                 <i className="nc-icon nc-zoom-split"></i>
-                <span className="d-lg-block"> Search</span>
+                {/* <span className="d-lg-block"> Search</span> */}
               </Nav.Link>
             </Nav.Item>
           </Nav>

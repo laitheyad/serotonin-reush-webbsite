@@ -218,7 +218,7 @@ function TableList() {
                           <Card.Text
                             style={{ color: "rgb(96,96,96) ", fontSize: 10 }}
                           >
-                            {cut_string(meal.recipe, 80)}
+                            {cut_string(meal.recipe, 35)}
                           </Card.Text>
                         </Card.Body>
                         <Row

@@ -365,7 +365,7 @@ function User() {
             <Card.Title
               style={{ marginLeft: "5%", marginTop: "3%", textAlign: "center" }}
             >
-              <h4>Your Meals</h4>
+              <h4>Ｙｏｕｒ ｍｅａｌｓ ＆ ｒｅａｃｔｉｏｎｓ</h4>
             </Card.Title>
             <div
               style={{
@@ -374,7 +374,7 @@ function User() {
                 position: "absolute",
               }}
             ></div>
-            <div style={{ height: 400, width: "100%" }}>
+            <div style={{ height: 400, width: "100%", padding: 10 }}>
               <DataGrid
                 rows={user_meals}
                 columns={columns}

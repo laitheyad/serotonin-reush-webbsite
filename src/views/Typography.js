@@ -134,8 +134,36 @@ function Typography() {
             </div>
           </Row>
         </Card>
-
-        <Row>
+        <Card
+          style={{
+            width: "18rem",
+            display: "flex",
+            margin: 10,
+            width: 300,
+            height: 220,
+          }}
+        >
+          <Card.Img
+            variant="top"
+            src={require("assets/img/add.jpg").default}
+            style={{ height: 150 }}
+          />
+          <Card.Body
+            style={{
+              margin: "auto",
+            }}
+          >
+            <button
+              type="button"
+              className="btn btn-info"
+              onClick={() => setaddModal(true)}
+              style={{ paddingBottom: 10 }}
+            >
+              Add new recipe
+            </button>
+          </Card.Body>
+        </Card>
+        {/* <Row>
           <Col>
             <img
               alt="..."
@@ -166,11 +194,11 @@ function Typography() {
               </button>
             </Row>
           </Col>
-        </Row>
+        </Row> */}
       </Row>
       <hr />
-      <Row style={{ justifyContent: "space-evenly" }}>
-        <Card
+      {/* <Row style={{ justifyContent: "space-evenly" }}> */}
+      {/* <Card
           style={{
             width: "18rem",
             display: "flex",
@@ -198,8 +226,8 @@ function Typography() {
               Add new recipe
             </button>
           </Card.Body>
-        </Card>{" "}
-        <img
+        </Card> */}
+      {/* <img
           alt="..."
           src={require("assets/img/dot3.jpg").default}
           style={{ height: 60, width: 60, marginTop: "5%" }}
@@ -225,7 +253,7 @@ function Typography() {
           </Card.Body>
         </Card>
       </Row>
-      <hr />
+      <hr /> */}
       <Modal open={addModal} onClose={() => setaddModal(false)} center>
         <Form
           style={{

@@ -227,11 +227,28 @@ function TableList() {
                           height: "30vh",
                         }}
                       >
-                        <Card.Img
-                          variant="top"
-                          src={require("assets/img/burger.jpg").default}
-                          style={{ height: 120 }}
-                        />
+                        {meal.img === null ? (
+                          <Card.Img
+                            variant="top"
+                            src={require("assets/img/burger.jpg").default}
+                            style={{
+                              height: 120,
+                              padding: 5,
+                              borderRadius: 15,
+                            }}
+                          />
+                        ) : (
+                          <Card.Img
+                            variant="top"
+                            src={"https://serotoninrush.tech/media/" + meal.img}
+                            style={{
+                              height: 120,
+                              padding: 5,
+                              borderRadius: 15,
+                            }}
+                          />
+                        )}
+
                         <Card.Body>
                           <Row>
                             <Col>
@@ -255,7 +272,10 @@ function TableList() {
                           <Card.Text
                             style={{ color: "rgb(96,96,96) ", fontSize: 10 }}
                           >
-                            {meal.recipe}
+                            {meal.recipe.length > 45
+                              ? meal.recipe.substring(0, 45 - 3) + "..."
+                              : meal.recipe}
+                            {/* {meal.recipe} */}
                           </Card.Text>
                           <Row>
                             <Col>
