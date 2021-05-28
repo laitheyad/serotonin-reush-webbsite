@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 
 // react-bootstrap components
@@ -188,11 +190,7 @@ function TableList() {
       .then(async (result) => {
         let response = await JSON.parse(result);
         setRatingModal(false);
-        notify(
-          "tc",
-          2,
-          "Your reaction has been added seccessfully, and it can't be changed ! "
-        );
+        notify("tc", 2, "Your reaction has been added seccessfully ! ");
       });
   }
   return (
@@ -275,7 +273,6 @@ function TableList() {
                             {meal.recipe.length > 45
                               ? meal.recipe.substring(0, 45 - 3) + "..."
                               : meal.recipe}
-                            {/* {meal.recipe} */}
                           </Card.Text>
                           <Row>
                             <Col>
